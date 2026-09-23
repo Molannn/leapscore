@@ -1,0 +1,11 @@
+{
+  "name": "leapscore-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "躍級 LeapScore:國中會考英語自適應學習平台 prototype",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "validate": "node tools/validate-items.mjs"
+  }
+}

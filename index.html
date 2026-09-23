@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>躍級 LeapScore｜國中會考英語自適應學習 Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="module" src="src/main.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">躍級<small>國中會考英語自適應學習</small></div>
+  <nav aria-label="主選單">
+    <button data-go="practice" disabled>練習</button>
+    <button data-go="report" disabled>診斷報告</button>
+    <button data-go="parent" disabled>家長端</button>
+  </nav>
+</header>
+
+<section id="intro">
+  <h1>先測 6 題,找出你離目標等級還差什麼</h1>
+  <p class="lead">系統會依你每一題的表現調整下一題難度,檢測完成後產生預估會考等級與四項技能的掌握度,再依考前剩餘天數排出練習順序。</p>
+  <div class="form">
+    <label>考試
+      <select id="exam"><option>國中會考英語(閱讀)</option><option disabled>學測英文(規劃中)</option><option disabled>會考聽力(規劃中)</option></select>
+    </label>
+    <label>目標等級
+      <select id="target"></select>
+    </label>
+    <label>考試日期
+      <input type="date" id="date" value="2027-05-15">
+    </label>
+    <button class="btn" id="start">開始程度檢測</button>
+  </div>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="meta"><span id="qmeta"></span><span id="qskill"></span></div>
+  <div class="why hidden" id="why"></div>
+  <div class="sheet">
+    <div class="passage hidden" id="passage"></div>
+    <p class="q" id="qtext"></p>
+    <div class="opts" id="opts"></div>
+    <div class="fb hidden" id="fb"></div>
+  </div>
+</section>
+
+<section id="report" class="hidden">
+  <h1>診斷報告</h1>
+  <div class="score">
+    <div class="big" id="bigScore">B</div>
+    <div>
+      <div id="gapText" style="font-size:15px"></div>
+      <div class="scale" aria-hidden="true">
+        <div class="track"></div><div class="fill" id="fill"></div><div class="tgt" id="tgt"></div>
+        <div class="ticks"><span>C</span><span>B</span><span>B+</span><span>B++</span><span>A</span><span>A+</span><span>A++</span></div>
+      </div>
+      <div style="font-size:13px;color:var(--muted)">紅線:預估等級  黑線:目標等級</div>
+    </div>
+  </div>
+  <h2>技能掌握度</h2>
+  <div class="skills" id="skills"></div>
+  <h2 id="planTitle">每日練習配置</h2>
+  <div class="plan" id="plan"></div>
+  <div class="row"><button class="btn" data-go="practice">開始今日練習</button></div>
+</section>
+
+<section id="parent" class="hidden">
+  <h1>家長端週報</h1>
+  <p class="lead" id="parentLead"></p>
+  <div class="stats" id="stats"></div>
+  <h2>預估等級變化</h2>
+  <div class="sheet"><svg id="trend" viewBox="0 0 600 160" width="100%" role="img" aria-label="預估等級變化折線"></svg></div>
+  <h2>本週重點</h2>
+  <div class="sheet" id="focus" style="font-size:15px"></div>
+</section>
+
+<p class="note">Prototype 展示用。題目為自編範例(見 data/items.json),等級換算與掌握度模型為簡化版(Elo 式 IRT 能力估計與技能層級更新),正式版將以會考歷屆試題校準參數。題目難度對應國中基本 2000 字與國中文法範圍。</p>
+</div>
+
+</body>
+</html>
