@@ -1,0 +1,293 @@
+{
+  "version": "0.1.0",
+  "exam": "國中會考英語(閱讀)",
+  "passages": {
+    "school-phone-rule": "Lily's school has a new rule this year: students cannot use cell phones during lunch. At first, many students were unhappy. But after a month, Lily found that she talked more with her friends. Some students even started playing board games together. Now, most of her classmates like the new rule."
+  },
+  "items": [
+    {
+      "id": "V01",
+      "skill": "vocab",
+      "difficulty": -1,
+      "question": "It's very cold outside. Don't forget to wear your ____.",
+      "options": [
+        "sandals",
+        "shorts",
+        "jacket",
+        "sunglasses"
+      ],
+      "answer": 2,
+      "explanation": "天氣冷要穿 jacket(外套),其他選項適合熱天。"
+    },
+    {
+      "id": "V02",
+      "skill": "vocab",
+      "difficulty": -0.6,
+      "question": "My brother is very ____. He always helps old people carry heavy things.",
+      "options": [
+        "lazy",
+        "kind",
+        "rude",
+        "shy"
+      ],
+      "answer": 1,
+      "explanation": "幫老人提重物表示 kind(善良的)。"
+    },
+    {
+      "id": "V03",
+      "skill": "vocab",
+      "difficulty": 0,
+      "question": "Please be ____ in the library. People are reading.",
+      "options": [
+        "noisy",
+        "busy",
+        "angry",
+        "quiet"
+      ],
+      "answer": 3,
+      "explanation": "圖書館裡有人在看書,要保持 quiet(安靜的)。"
+    },
+    {
+      "id": "V04",
+      "skill": "vocab",
+      "difficulty": 0.4,
+      "question": "Amy ____ her keys, so she couldn't open the door.",
+      "options": [
+        "lost",
+        "found",
+        "sold",
+        "made"
+      ],
+      "answer": 0,
+      "explanation": "因為無法開門,可推知鑰匙 lost(弄丟了)。"
+    },
+    {
+      "id": "V05",
+      "skill": "vocab",
+      "difficulty": 0.8,
+      "question": "The math test was so ____ that almost everyone got 100 points.",
+      "options": [
+        "difficult",
+        "easy",
+        "terrible",
+        "dangerous"
+      ],
+      "answer": 1,
+      "explanation": "幾乎人人滿分,表示考試 easy(簡單的)。so...that 表因果。"
+    },
+    {
+      "id": "V06",
+      "skill": "vocab",
+      "difficulty": 1.2,
+      "question": "We need to ____ water. There isn't much rain this year.",
+      "options": [
+        "waste",
+        "spend",
+        "save",
+        "share"
+      ],
+      "answer": 2,
+      "explanation": "雨量少所以要 save water(節約用水)。waste 意思相反。"
+    },
+    {
+      "id": "G01",
+      "skill": "gram",
+      "difficulty": -1,
+      "question": "There ____ two cats under the table.",
+      "options": [
+        "is",
+        "are",
+        "be",
+        "am"
+      ],
+      "answer": 1,
+      "explanation": "There be 句型,主詞 two cats 為複數,用 are。"
+    },
+    {
+      "id": "G02",
+      "skill": "gram",
+      "difficulty": -0.3,
+      "question": "This bag is ____ than that one.",
+      "options": [
+        "cheap",
+        "cheaper",
+        "cheapest",
+        "more cheap"
+      ],
+      "answer": 1,
+      "explanation": "有 than 用比較級,cheap 的比較級為 cheaper。"
+    },
+    {
+      "id": "G03",
+      "skill": "gram",
+      "difficulty": 0.2,
+      "question": "I ____ TV when my mom came home.",
+      "options": [
+        "watch",
+        "watched",
+        "am watching",
+        "was watching"
+      ],
+      "answer": 3,
+      "explanation": "過去某時間點正在進行的動作用過去進行式 was watching。"
+    },
+    {
+      "id": "G04",
+      "skill": "gram",
+      "difficulty": 0.6,
+      "question": "Do you know where ____?",
+      "options": [
+        "does he live",
+        "he lives",
+        "he live",
+        "lives he"
+      ],
+      "answer": 1,
+      "explanation": "間接問句用直述句語序:where he lives。"
+    },
+    {
+      "id": "G05",
+      "skill": "gram",
+      "difficulty": 1,
+      "question": "I have lived in Taichung ____ I was six.",
+      "options": [
+        "for",
+        "when",
+        "since",
+        "until"
+      ],
+      "answer": 2,
+      "explanation": "現在完成式接過去時間點用 since。for 接一段時間。"
+    },
+    {
+      "id": "G06",
+      "skill": "gram",
+      "difficulty": 1.3,
+      "question": "This letter ____ by my grandfather in 1990.",
+      "options": [
+        "was written",
+        "wrote",
+        "is writing",
+        "writes"
+      ],
+      "answer": 0,
+      "explanation": "信是「被」寫的,且在 1990 年,用過去式被動 was written。"
+    },
+    {
+      "id": "R01",
+      "skill": "read",
+      "difficulty": -0.3,
+      "passage": "school-phone-rule",
+      "question": "What is the passage mainly about?",
+      "options": [
+        "Lily's new phone",
+        "Lunch food at Lily's school",
+        "A school rule and how students feel about it",
+        "How to play board games"
+      ],
+      "answer": 2,
+      "explanation": "全文圍繞午餐禁用手機的新規定,以及學生態度的轉變。"
+    },
+    {
+      "id": "R02",
+      "skill": "read",
+      "difficulty": 0,
+      "passage": "school-phone-rule",
+      "question": "How did many students feel about the rule at first?",
+      "options": [
+        "They liked it.",
+        "They were not happy.",
+        "They didn't care.",
+        "They wanted more rules."
+      ],
+      "answer": 1,
+      "explanation": "第二句 At first, many students were unhappy。"
+    },
+    {
+      "id": "R03",
+      "skill": "read",
+      "difficulty": 0.5,
+      "passage": "school-phone-rule",
+      "question": "What happened to Lily after a month?",
+      "options": [
+        "She bought a new phone.",
+        "The school stopped the rule.",
+        "She ate less at lunch.",
+        "She talked more with her friends."
+      ],
+      "answer": 3,
+      "explanation": "第三句指出一個月後 Lily 和朋友聊天變多。"
+    },
+    {
+      "id": "R04",
+      "skill": "read",
+      "difficulty": 1,
+      "passage": "school-phone-rule",
+      "question": "Which is TRUE according to the passage?",
+      "options": [
+        "Most of Lily's classmates like the rule now.",
+        "All students still hate the rule.",
+        "Students can use phones at lunch.",
+        "Lily plays board games alone."
+      ],
+      "answer": 0,
+      "explanation": "最後一句 Now, most of her classmates like the new rule。"
+    },
+    {
+      "id": "D01",
+      "skill": "disc",
+      "difficulty": -0.8,
+      "question": "I was hungry, ____ I made a sandwich.",
+      "options": [
+        "so",
+        "but",
+        "or",
+        "because"
+      ],
+      "answer": 0,
+      "explanation": "前為原因,後為結果,用 so。"
+    },
+    {
+      "id": "D02",
+      "skill": "disc",
+      "difficulty": -0.1,
+      "question": "Ben studied hard, ____ he still failed the test.",
+      "options": [
+        "so",
+        "and",
+        "but",
+        "because"
+      ],
+      "answer": 2,
+      "explanation": "用功卻沒考過,語意轉折用 but。"
+    },
+    {
+      "id": "D03",
+      "skill": "disc",
+      "difficulty": 0.4,
+      "question": "A: Would you like some more cake?  B: ____ I'm full.",
+      "options": [
+        "Yes, please.",
+        "Here you are.",
+        "You're welcome.",
+        "No, thanks."
+      ],
+      "answer": 3,
+      "explanation": "B 說自己吃飽了,應婉拒:No, thanks。"
+    },
+    {
+      "id": "D04",
+      "skill": "disc",
+      "difficulty": 1,
+      "question": "Mark loves sports. ____, he plays basketball every day and swims on weekends.",
+      "options": [
+        "However",
+        "For example",
+        "Instead",
+        "But"
+      ],
+      "answer": 1,
+      "explanation": "後句舉出具體運動作為例子,用 For example。"
+    }
+  ]
+}
