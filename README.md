@@ -2,7 +2,7 @@
 
 國中會考英語自適應學習平台的互動 prototype。學生先完成 6 題程度檢測,系統估計能力值與四項技能掌握度,再依「掌握度低且配分高」的順序安排練習,並提供診斷報告、學生學習分析與家長端週報。
 
-前端使用 HTML、CSS、原生 JavaScript ES modules，無需建置。Gemini 即時單字出題由 Node.js 後端提供；純靜態部署仍可使用原題庫與內建情境複習。
+前端使用 HTML、CSS、原生 JavaScript ES modules，無需建置。Gemini 即時單字出題由 Node.js 後端提供；GitHub Pages 前端可透過 HTTPS 連接 Render 後端。未設定後端網址時仍可使用原題庫與內建情境複習。
 
 ## 目錄結構
 
@@ -16,6 +16,8 @@ leapscore/
 ├── src/
 │   ├── main.js             進入點:載入題庫、串接事件與流程
 │   ├── config.js           設定:技能、配分權重、等級、預設值
+│   ├── deployment.js       公開的 Render 後端網址（不含金鑰）
+│   ├── api.js              跨來源 API 與服務喚醒
 │   ├── state.js            學習者狀態的資料結構
 │   ├── model.js            學習者模型(能力值、掌握度、等級換算)
 │   ├── selector.js         選題邏輯
@@ -26,6 +28,8 @@ leapscore/
 │   └── generate.mjs        Gemini 請求與題目格式檢查
 ├── tests/                 自適應邏輯與 API 測試
 ├── .env.example           後端金鑰設定範本
+├── render.yaml            Render 一鍵部署範本
+├── .nojekyll              GitHub Pages 靜態檔案部署
 ├── tools/
 │   └── validate-items.mjs  題庫格式檢查
 ├── package.json            常用指令
@@ -50,18 +54,55 @@ PORT=8000
 
 未設定金鑰時，其他學習功能仍可使用。生成失敗後可明確選擇「改用內建情境題」，不會將備援題標示成 AI 生成。每次點擊生成最多呼叫 Gemini 一次，沒有自動付費重試。
 
-伺服器預設只監聽本機 `127.0.0.1`，每分鐘最多 20 次出題、同時最多 2 次。這是本機開發版本；公開服務需補上登入、每人額度及正式部署設定。
+本機預設監聽 `127.0.0.1`；Render 設定為 `0.0.0.0` 並使用平台提供的 `PORT`。每分鐘最多 20 次出題、同時最多 2 次。
 
-## 部署到 GitHub Pages
+## GitHub Pages ＋ Render 部署
 
-GitHub Pages 只能提供靜態檔案，**無法執行 Gemini 後端**；此部署方式只支援一般學習與內建情境題。若需公開提供即時生成，須另行部署後端並設定同源 `/api/review` 路由。
+學生網址：<https://molannn.github.io/leapscore/>。GitHub Pages 提供前端；Render 保管 Gemini 金鑰並執行 `/api/review`。
 
-1. 將整個資料夾 push 到 GitHub repository。
-2. 進入 repository 的 Settings,選 Pages。
-3. Source 選 Deploy from a branch,Branch 選 `main`,資料夾選 `/ (root)`。
-4. 儲存後約一分鐘,網站會出現在 `https://<帳號>.github.io/<repository 名稱>/`。
+### 1. 建立 Render 後端
 
-所有路徑皆為相對路徑,放在子路徑下也能正常運作。
+[部署到 Render](https://render.com/deploy?repo=https://github.com/Molannn/leapscore)
+
+登入 Render 後，從以上連結建立 Blueprint。範本使用 Free web service，填入 `GEMINI_API_KEY` 後部署，金鑰不要填入 GitHub 檔案。部署成功後複製服務網址，例如 `https://leapscore-api-xxxx.onrender.com`；實際名稱由 Render 決定。
+
+`render.yaml` 已提供以下設定：
+
+| 設定 | 值 |
+|---|---|
+| Build command | `npm run validate && npm test` |
+| Start command | `npm start` |
+| 健康檢查 | `/api/health` |
+| `HOST` | `0.0.0.0` |
+| `ALLOWED_ORIGINS` | `https://molannn.github.io` |
+| `GEMINI_MODEL` | `gemini-3.1-pro-preview` |
+| `REVIEW_DAILY_LIMIT` | `100` |
+
+也可以手動建立 Node Web Service，連接此 repo 的 `main`，套用上述設定及 `GEMINI_API_KEY`。Blueprint 設定推送 `main` 時自動部署，方便此專案同步更新。
+
+### 2. 設定前端 API 網址
+
+在 `src/deployment.js` 填入 **Render 實際服務網址**，只填 HTTPS origin，不加 `/api/review`：
+
+```js
+export const API_BASE_URL = "https://你的服務.onrender.com";
+```
+
+提交並推送到 GitHub。此設定會公開，不能放 API 金鑰。localhost 開發會自動忽略這個網址，繼續使用本機後端。
+
+### 3. GitHub Pages
+
+Repository → Settings → Pages：Source 選 Deploy from a branch，Branch 選 `main`，資料夾選 `/ (root)`。已啟用者不需變更。部署完成後重新整理學生網址。
+
+打開 `https://你的服務.onrender.com/api/health` 應得到 `{"status":"ok"}`；這只代表後端可用，實際 Gemini 金鑰與額度在生成時驗證。到學生端選興趣、從單字錯題生成一題，才是完整驗證。
+
+### 連線與額度
+
+前端會先以健康檢查喚醒遠端服務，最多等待 90 秒，再送出一次生成請求（35 秒逾時）。生成不自動重試，以免重複計費；服務失敗時可使用內建題。後端只對明確列出的 origin 回應跨來源請求，`ALLOWED_ORIGINS` 可用逗號分隔；origin 不包含 `/leapscore/` 路徑。Render 自身網站 origin 由 `RENDER_EXTERNAL_URL` 納入。
+
+目前為公開展示版，沒有學生登入。CORS 是瀏覽器來源限制，不等於身分驗證。每日 100 次為整個執行個體共用的記憶體上限，UTC 換日或伺服器重啟會重置，不是帳務硬上限；正式多人服務需持久化每人額度與登入控制。學習紀錄仍保存在各瀏覽器，從 localhost 改用 GitHub Pages 不會自動帶入舊紀錄。
+
+部署設定參考：[Render Blueprint](https://render.com/docs/blueprint-spec)、[Render Web Services](https://render.com/docs/web-services)。
 
 ## 維護指南
 

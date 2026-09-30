@@ -308,9 +308,9 @@ export function prepareReview(item, interests) {
   $("fallbackReview").classList.add("hidden");
 }
 
-export function reviewLoading() {
+export function reviewLoading(message = "正在依你的興趣與複習表現準備題目…") {
   $("reviewQuestion").classList.add("hidden");
-  $("reviewStatus").textContent = "正在依你的興趣與複習表現準備題目…";
+  $("reviewStatus").textContent = message;
   $("generateReview").disabled = true;
   $("fallbackReview").classList.add("hidden");
 }

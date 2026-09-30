@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: leapscore-api
+    runtime: node
+    plan: free
+    buildCommand: npm run validate && npm test
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "24.14.0"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: ALLOWED_ORIGINS
+        value: https://molannn.github.io
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.1-pro-preview
+      - key: REVIEW_DAILY_LIMIT
+        value: "100"

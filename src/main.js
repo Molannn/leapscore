@@ -4,6 +4,7 @@ import { loadState, saveState } from "./state.js";
 import { updateTheta, updateMastery, thetaToLevel } from "./model.js";
 import { pickPlacementItem, pickPracticeItem } from "./selector.js";
 import { createInterestReview, canReview, reviewHistory } from "./review.js";
+import { requestReview } from "./api.js";
 import * as view from "./ui/views.js";
 
 let bank = { items: [], passages: {} };
@@ -114,7 +115,6 @@ async function generateReview(useFallback = false) {
   pendingReview = controller;
   activeReview = null;
   view.reviewLoading();
-  const timeout = setTimeout(() => controller.abort(), 35000);
   try {
     let item;
     if (useFallback) {
@@ -123,15 +123,10 @@ async function generateReview(useFallback = false) {
       const history = reviewHistory(state.attempts, source.id).slice(-30).map(a => ({
         correct: a.correct, question: a.question, interest: a.interest,
       }));
-      const res = await fetch("api/review", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sourceItemId: source.id, interests: state.interests, history }),
+      item = await requestReview({ sourceItemId: source.id, interests: state.interests, history }, {
         signal: controller.signal,
+        onConnecting: () => view.reviewLoading("正在連線到出題服務，首次開啟可能需要稍等片刻…"),
       });
-      let result;
-      try { result = await res.json(); } catch { throw new Error("AI 出題需要後端服務，請用 npm start 啟動，或改用內建情境題。"); }
-      if (!res.ok) throw new Error(result.error || "AI 出題暫時無法使用。");
-      item = result.item;
       if (!item || item.sourceItemId !== source.id || item.targetWord !== source.targetWord ||
           !state.interests.includes(item.interest) || !Array.isArray(item.options) || item.options.length !== 4 ||
           item.options[item.answer] !== source.targetWord || typeof item.question !== "string" ||
@@ -143,9 +138,8 @@ async function generateReview(useFallback = false) {
     view.renderReviewQuestion(item, answerReview);
   } catch (error) {
     if (pendingReview !== controller) return;
-    view.reviewError(error.name === "AbortError" ? "出題逾時，請重試或改用內建情境題。" : error.message);
+    view.reviewError(["AbortError", "TimeoutError"].includes(error.name) ? "出題逾時，請重試或改用內建情境題。" : error.message);
   } finally {
-    clearTimeout(timeout);
     if (pendingReview === controller) pendingReview = null;
   }
 }
