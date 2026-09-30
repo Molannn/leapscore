@@ -5,7 +5,7 @@ import { SKILLS, DEFAULT_TARGET, DEFAULT_EXAM_DATE } from "./config.js";
 export function createState() {
   const perSkill = (v) => Object.fromEntries(Object.keys(SKILLS).map((k) => [k, v]));
   return {
-    phase: "placement", // "placement" | "practice"
+    phase: "placement", // "placement" | "bonus" | "practice"
     theta: 0,
     target: DEFAULT_TARGET,
     examDate: new Date(DEFAULT_EXAM_DATE),
@@ -18,6 +18,7 @@ export function createState() {
     levelHistory: [],
     attempts: [],
     interests: [],
+    bonus: null,
     current: null,
     reason: "",
   };
@@ -42,7 +43,7 @@ export function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (!saved || !Array.isArray(saved.attempts) || !Array.isArray(saved.used)) return createState();
-    if (!["placement", "practice"].includes(saved.phase) || !Number.isFinite(saved.theta)) return createState();
+    if (!["placement", "bonus", "practice"].includes(saved.phase) || !Number.isFinite(saved.theta)) return createState();
     if (!Object.keys(SKILLS).every((k) => Number.isFinite(saved.mastery?.[k]) && Number.isFinite(saved.seen?.[k]))) return createState();
     const examDate = new Date(saved.examDate);
     if (!Number.isFinite(examDate.getTime())) return createState();

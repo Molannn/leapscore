@@ -50,8 +50,22 @@
   </div>
 </section>
 
+<section id="bonus" class="hidden">
+  <div class="meta"><span>驚喜加分題</span><span>換個題目，放鬆一下</span></div>
+  <h1>以下這張圖是什麼？</h1>
+  <p class="lead">答對可獲得 1 分彩蛋加分。</p>
+  <div class="sheet">
+    <img id="bonusImage" class="bonus-image" src="assets/images/palace-bonus.jpg" alt="古裝劇畫面：一名女孩與身旁的宮裝女子" width="656" height="369">
+    <p id="bonusImageError" class="why hidden" role="status">圖片暫時無法載入，可以略過這題繼續查看報告。</p>
+    <div id="bonusOptions" class="opts"></div>
+    <div id="bonusFeedback" class="fb hidden" aria-live="polite"></div>
+  </div>
+  <div class="row"><button class="btn ghost" id="skipBonus">略過，查看診斷報告</button></div>
+</section>
+
 <section id="report" class="hidden">
   <h1>診斷報告</h1>
+  <p id="bonusResult" class="why hidden"></p>
   <div class="score">
     <div class="big" id="bigScore">B</div>
     <div>
@@ -73,19 +87,26 @@
 <section id="analysis" class="hidden">
   <h1>我的學習分析</h1>
   <p class="lead">從累積答題紀錄掌握進步與待加強的地方。包含程度檢測與練習，資料保存在此瀏覽器。</p>
+  <h2>我的興趣與單字複習</h2>
+  <div class="sheet">
+    <p>選擇喜歡的主題與單字，讓 Gemini 設計新情境。沒有錯題也可以開始練習。</p>
+    <fieldset class="interest-options" id="interestOptions"><legend>我感興趣的主題</legend></fieldset>
+    <p id="interestStatus" class="muted" role="status"></p>
+    <div class="interest-start">
+      <label for="reviewWord">練習單字</label>
+      <select id="reviewWord" aria-describedby="reviewEntryHelp"></select>
+      <p id="reviewEntryHelp" class="muted"></p>
+      <button class="btn" id="startInterestReview" disabled>依興趣出題</button>
+    </div>
+    <p id="reviewSummary" class="muted"></p>
+    <p class="muted">答錯後提供更多線索；同一單字連續答對 2 次後挑戰較間接的情境。複習成果另行記錄，不直接改變預估會考等級。</p>
+  </div>
+  <h2>學習表現</h2>
   <div class="stats" id="learningStats"></div>
   <h2>近期學習狀況</h2>
   <div class="sheet" id="learningInsight"></div>
   <h2>各技能答題表現</h2>
   <div id="skillAnalysis" class="analysis-skills"></div>
-  <h2>我的興趣與單字複習</h2>
-  <div class="sheet">
-    <p>選擇喜歡的主題，讓 Gemini 為答錯的單字設計新情境。可複選，隨時調整。</p>
-    <fieldset class="interest-options" id="interestOptions"><legend>我感興趣的主題</legend></fieldset>
-    <p id="interestStatus" class="muted" role="status"></p>
-    <p id="reviewSummary" class="muted"></p>
-    <p class="muted">答錯後提供更多線索；同一單字連續答對 2 次後挑戰較間接的情境。複習成果另行記錄，不直接改變預估會考等級。</p>
-  </div>
   <h2>錯題紀錄</h2>
   <p class="lead">保留曾經答錯的題目與最近一次錯答。後續原題或情境複習答對會標示「最近已答對」，仍可回顧。單字錯題可點選「依興趣生成複習題」。</p>
   <div class="review-filters">

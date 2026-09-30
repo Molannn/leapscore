@@ -7,10 +7,10 @@ import { canReview, normalizeInterests } from '../src/review.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const bank = JSON.parse(await readFile(new URL('../data/items.json', import.meta.url), 'utf8'));
-const types = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', json: 'application/json; charset=utf-8' };
+const types = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', jpg: 'image/jpeg', json: 'application/json; charset=utf-8' };
 // 明確列出公開檔案，避免 .env、後端程式與 Git 資料外洩。
 const publicFiles = new Set(['index.html', 'assets/css/style.css', 'data/items.json',
-  'src/main.js', 'src/api.js', 'src/deployment.js', 'src/state.js', 'src/config.js', 'src/model.js', 'src/selector.js', 'src/review.js', 'src/ui/views.js']);
+  'src/bonus.js', 'assets/images/palace-bonus.jpg', 'src/main.js', 'src/api.js', 'src/deployment.js', 'src/state.js', 'src/config.js', 'src/model.js', 'src/selector.js', 'src/review.js', 'src/ui/views.js']);
 
 async function readJSON(req) {
   let data = '';

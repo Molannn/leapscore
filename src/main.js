@@ -3,8 +3,9 @@ import { ITEMS_URL, PLACEMENT_LENGTH, DEFAULT_EXAM_DATE } from "./config.js";
 import { loadState, saveState } from "./state.js";
 import { updateTheta, updateMastery, thetaToLevel } from "./model.js";
 import { pickPlacementItem, pickPracticeItem } from "./selector.js";
-import { createInterestReview, canReview, reviewHistory } from "./review.js";
+import { createInterestReview, canReview, reviewHistory, reviewTargets } from "./review.js";
 import { requestReview } from "./api.js";
+import { qualifiesForBonus, completeBonus } from "./bonus.js";
 import * as view from "./ui/views.js";
 
 let bank = { items: [], passages: {} };
@@ -59,8 +60,13 @@ function answer(choice) {
   if (state.phase === "placement") state.placementCount++;
   const isLastPlacement = state.phase === "placement" && state.placementCount >= PLACEMENT_LENGTH;
   if (isLastPlacement) {
-    state.phase = "practice";
-    view.enableNav();
+    if (qualifiesForBonus(state.attempts) && !state.bonus) {
+      state.phase = "bonus";
+      state.bonus = { status: "pending" };
+    } else {
+      state.phase = "practice";
+      view.enableNav();
+    }
   }
   persist();
   view.renderFeedback(
@@ -68,10 +74,18 @@ function answer(choice) {
       item, choice, correct, skillBefore,
       skillAfter: state.mastery[item.skill],
       levelBefore, levelAfter: thetaToLevel(state.theta),
-      isLastPlacement, isPractice: state.phase === "practice" && !isLastPlacement,
+      isLastPlacement, hasBonus: state.phase === "bonus", isPractice: state.phase === "practice" && !isLastPlacement,
     },
-    { onNext: isLastPlacement ? () => openScreen("report") : onNext, onReport: () => openScreen("report") }
+    { onNext: isLastPlacement ? () => openScreen(state.phase === "bonus" ? "bonus" : "report") : onNext, onReport: () => openScreen("report") }
   );
+}
+
+function answerBonus(choice) {
+  if (!completeBonus(state, choice)) return;
+  persist();
+  view.enableNav();
+  if (choice === null) return openScreen("report");
+  view.renderBonusFeedback(state.bonus, () => openScreen("report"));
 }
 
 function onNext() {
@@ -81,11 +95,16 @@ function onNext() {
 function openScreen(id) {
   pendingReview?.abort();
   pendingReview = null;
+  if (state.phase === "bonus" || id === "bonus") {
+    view.renderBonus(state.bonus, answerBonus, () => answerBonus(null));
+    return;
+  }
   if (id === "practice") return nextQuestion();
   if (id === "report") view.renderReport(state);
   if (id === "analysis") view.renderAnalysis(state, {
     canReview: (id) => canReview(bank.items.find(item => item.id === id)),
     onReview: startReview,
+    reviewTargets: reviewTargets(bank.items, state.attempts),
     onInterests: (interests) => { state.interests = interests; persist(); },
   });
   if (id === "parent") view.renderParent(state);
@@ -94,13 +113,14 @@ function openScreen(id) {
 
 function startReview(sourceItemId) {
   const item = bank.items.find(x => x.id === sourceItemId);
-  if (!canReview(item) || !state.attempts.some(a => !a.correct && (a.sourceItemId || a.itemId) === sourceItemId)) return;
+  if (state.phase !== "practice" || !canReview(item)) return;
   pendingReview?.abort();
   pendingReview = null;
   reviewSource = item;
   activeReview = null;
   view.showScreen("review");
-  view.prepareReview(item, state.interests);
+  const hadMistake = state.attempts.some(a => !a.correct && (a.sourceItemId || a.itemId) === sourceItemId);
+  view.prepareReview(item, state.interests, hadMistake);
   if (!state.interests.length) {
     view.reviewError("請先返回學習分析，選擇至少一項興趣。", false);
     return;
@@ -167,6 +187,7 @@ function bindEvents() {
   document.getElementById("fallbackReview").onclick = () => generateReview(true);
   document.getElementById("start").onclick = () => {
     if (!bankReady) return;
+    if (state.phase === "bonus") return openScreen("bonus");
     if (state.phase === "practice") return openScreen("analysis");
     state.target = Number(document.getElementById("target").value);
     state.examDate = new Date(document.getElementById("date").value || DEFAULT_EXAM_DATE);
@@ -175,7 +196,7 @@ function bindEvents() {
   };
   document.querySelectorAll("[data-go]").forEach((b) =>
     b.addEventListener("click", () => {
-      if (state.phase === "placement") return;
+      if (state.phase !== "practice") return;
       openScreen(b.dataset.go);
     })
   );
@@ -190,7 +211,9 @@ async function init() {
     bank = await loadBank();
     bankReady = true;
     document.getElementById("start").disabled = false;
-    if (state.phase === "practice") {
+    if (state.phase === "bonus") {
+      openScreen("bonus");
+    } else if (state.phase === "practice") {
       view.enableNav();
       openScreen("analysis");
     } else if (state.placementCount) {

@@ -2,10 +2,11 @@
 import { SKILLS, LEVELS, DAILY_MINUTES, PLACEMENT_LENGTH } from "../config.js";
 import { thetaToLevel, rankSkills, allocateMinutes } from "../model.js";
 import { INTERESTS, reviewHistory } from "../review.js";
+import { BONUS_QUESTION } from "../bonus.js";
 import { daysUntil } from "../state.js";
 
 const $ = (id) => document.getElementById(id);
-const SCREENS = ["intro", "quiz", "report", "parent", "analysis", "review"];
+const SCREENS = ["intro", "quiz", "report", "parent", "analysis", "review", "bonus"];
 const LETTERS = "ABCD";
 
 export function showScreen(id) {
@@ -68,7 +69,7 @@ export function renderQuestion(state, item, passages, onAnswer) {
   showScreen("quiz");
 }
 
-export function renderFeedback({ item, choice, correct, skillBefore, skillAfter, levelBefore, levelAfter, isLastPlacement, isPractice }, handlers) {
+export function renderFeedback({ item, choice, correct, skillBefore, skillAfter, levelBefore, levelAfter, isLastPlacement, hasBonus, isPractice }, handlers) {
   document.querySelectorAll(".opt").forEach((b, j) => {
     b.disabled = true;
     if (j === item.answer) b.classList.add("right");
@@ -80,7 +81,7 @@ export function renderFeedback({ item, choice, correct, skillBefore, skillAfter,
     <div><span class="mark ${correct ? "r" : "w"}">${correct ? "正確" : "再想想"}</span><span id="expl"></span></div>
     <div class="delta">${SKILLS[item.skill]}掌握度 ${Math.round(skillBefore * 100)}% 變為 ${Math.round(skillAfter * 100)}%  預估等級 ${LEVELS[levelBefore]} 變為 ${LEVELS[levelAfter]}</div>
     <div class="row">
-      <button class="btn" id="next">${isLastPlacement ? "查看診斷報告" : "下一題"}</button>
+      <button class="btn" id="next">${hasBonus ? "挑戰加分題" : isLastPlacement ? "查看診斷報告" : "下一題"}</button>
       ${isPractice ? '<button class="btn ghost" id="toRep">看報告</button>' : ""}
     </div>`;
   $("expl").textContent = item.explanation;
@@ -90,6 +91,10 @@ export function renderFeedback({ item, choice, correct, skillBefore, skillAfter,
 }
 
 export function renderReport(state) {
+  $("bonusResult").classList.toggle("hidden", state.bonus?.status !== "answered");
+  $("bonusResult").textContent = state.bonus?.correct
+    ? "彩蛋加分 +1！英語能力估計仍依前測與英語練習計算。"
+    : "已完成彩蛋加分題。這題不影響英語能力估計。";
   const level = thetaToLevel(state.theta);
   const gap = state.target - level;
   const max = LEVELS.length - 1;
@@ -168,7 +173,7 @@ const accuracy = (attempts) => attempts.length
   : "尚無紀錄";
 
 export function renderAnalysis(state, handlers = {}) {
-  renderInterests(state, handlers.onInterests);
+  renderInterests(state, handlers);
   const attempts = state.attempts;
   const groups = new Map();
   attempts.forEach((attempt) => {
@@ -270,10 +275,27 @@ export function renderAnalysis(state, handlers = {}) {
   renderWrong();
 }
 
-function renderInterests(state, onChange) {
+function renderInterests(state, { onInterests, onReview, reviewTargets = [] }) {
+  const select = $("reviewWord");
+  const previous = select.value;
+  select.replaceChildren();
+  reviewTargets.forEach(target => {
+    const status = target.pending ? "待加強" : target.hadMistake ? "曾答錯，最近已答對" : "情境練習";
+    const option = element("option", `${target.word} · ${status}`);
+    option.value = target.id;
+    select.append(option);
+  });
+  if (reviewTargets.some(target => target.id === previous)) select.value = previous;
+  $("reviewEntryHelp").textContent = reviewTargets.some(target => target.hadMistake)
+    ? "優先列出待加強單字，也可以選擇其他單字練習。"
+    : "目前沒有單字錯題，仍可選擇一個單字體驗興趣出題。";
+  $("startInterestReview").onclick = () => {
+    if (state.interests.length && select.value) onReview?.(select.value);
+  };
   const box = $("interestOptions");
   box.replaceChildren(element("legend", "我感興趣的主題"));
   const updateStatus = () => {
+    $("startInterestReview").disabled = !state.interests.length || !reviewTargets.length;
     $("interestStatus").textContent = state.interests.length
       ? `目前選擇：${state.interests.map(k => INTERESTS[k]).join("、")}。變更會自動儲存。`
       : "尚未選擇興趣，請先選擇至少一項主題。";
@@ -286,7 +308,7 @@ function renderInterests(state, onChange) {
     input.checked = state.interests.includes(key);
     input.onchange = () => {
       state.interests = input.checked ? [...new Set([...state.interests, key])] : state.interests.filter(k => k !== key);
-      onChange?.(state.interests);
+      onInterests?.(state.interests);
       updateStatus();
     };
     label.append(input, element("span", title));
@@ -296,11 +318,11 @@ function renderInterests(state, onChange) {
   const reviews = state.attempts.filter(a => a.mode === "interest-review");
   $("reviewSummary").textContent = reviews.length
     ? `已完成 ${reviews.length} 次情境複習 · 答對率 ${accuracy(reviews)} · 複習過 ${new Set(reviews.map(a => a.sourceItemId)).size} 個單字`
-    : "還沒有情境複習紀錄。從下方單字錯題開始。";
+    : "還沒有情境複習紀錄。選擇興趣與單字，就能開始。";
 }
 
-export function prepareReview(item, interests) {
-  $("reviewContext").textContent = `針對原錯題 ${item.id} 的單字，換個情境再試一次。${interests.length ? `主題：${interests.map(k => INTERESTS[k]).join("、")}` : ""}`;
+export function prepareReview(item, interests, hadMistake = true) {
+  $("reviewContext").textContent = `${hadMistake ? "針對原錯題" : "練習題"} ${item.id} 的單字，換個情境再試一次。${interests.length ? `主題：${interests.map(k => INTERESTS[k]).join("、")}` : ""}`;
   $("reviewQuestion").classList.add("hidden");
   $("reviewStatus").textContent = "";
   $("generateReview").disabled = !interests.length;
@@ -359,4 +381,43 @@ export function renderReviewFeedback(item, choice, correct, history) {
   $("generateReview").disabled = false;
   $("generateReview").textContent = "生成下一道情境題";
   $("generateReview").focus();
+}
+
+
+export function renderBonus(bonus, onAnswer, onSkip) {
+  const box = $("bonusOptions");
+  box.replaceChildren();
+  BONUS_QUESTION.options.forEach((text, index) => {
+    const button = element("button", undefined, "opt");
+    button.append(element("b", LETTERS[index]), element("span", text));
+    button.onclick = () => onAnswer(index);
+    box.append(button);
+  });
+  $("bonusFeedback").classList.add("hidden");
+  $("skipBonus").classList.remove("hidden");
+  $("skipBonus").onclick = onSkip;
+  const picture = $("bonusImage");
+  const failed = () => $("bonusImageError").classList.remove("hidden");
+  picture.onerror = failed;
+  picture.onload = () => $("bonusImageError").classList.add("hidden");
+  if (picture.complete && !picture.naturalWidth) failed();
+  showScreen("bonus");
+  box.firstElementChild?.focus();
+}
+
+export function renderBonusFeedback(result, onReport) {
+  Array.from($("bonusOptions").children).forEach((button, index) => {
+    button.disabled = true;
+    if (index === BONUS_QUESTION.answer) button.classList.add("right");
+    else if (index === result.choice) button.classList.add("wrong");
+  });
+  const feedback = $("bonusFeedback");
+  feedback.replaceChildren(element("strong", result.correct ? "答對了！彩蛋加分 +1" : "答案是 A：皇額娘她推了熹娘娘", result.correct ? "correct-answer" : "wrong-answer"),
+    element("p", "換個心情，接著看看你的學習起點吧！"));
+  const button = element("button", "查看診斷報告", "btn");
+  button.onclick = onReport;
+  feedback.append(button);
+  feedback.classList.remove("hidden");
+  $("skipBonus").classList.add("hidden");
+  button.focus();
 }

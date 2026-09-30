@@ -53,3 +53,13 @@ export function createInterestReview(item, preferences, attempts, random = Math.
     difficulty: item.difficulty,
   };
 }
+
+// 常駐入口可練習所有支援單字；優先列出最新仍答錯的單字。
+export function reviewTargets(items, attempts) {
+  return items.filter(canReview).map(item => {
+    const records = attempts.filter(a => (a.sourceItemId || a.itemId) === item.id);
+    const hadMistake = records.some(a => !a.correct);
+    const pending = hadMistake && !records.at(-1).correct;
+    return { id: item.id, word: item.targetWord, hadMistake, pending };
+  }).sort((a, b) => Number(b.pending) - Number(a.pending) || Number(b.hadMistake) - Number(a.hadMistake));
+}

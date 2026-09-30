@@ -89,3 +89,22 @@ test('reject answer leakage, duplicates, missing blanks and malformed model resp
   await assert.rejects(generateReview({ ...args, fetchImpl: async () => result({ question: 'bad' }) }), /未通過/);
   await assert.rejects(generateReview({ ...args, fetchImpl: async () => ({ ok: true, json: async () => ({ candidates: [{ finishReason: 'MAX_TOKENS' }] }) }) }), /未通過/);
 });
+
+test('interest entry includes all vocabulary even without mistakes and prioritizes unresolved words', async () => {
+  const { reviewTargets } = await import('../src/review.js');
+  const empty = reviewTargets(bank.items, []);
+  assert.equal(empty.length, 6);
+  assert.ok(empty.every(target => !target.hadMistake));
+  const allCorrect = bank.items.map(item => ({ itemId: item.id, correct: true }));
+  assert.equal(reviewTargets(bank.items, allCorrect).length, 6);
+  const records = [
+    { itemId: 'V02', correct: false },
+    { itemId: 'V03', correct: false },
+    { itemId: 'review:1', sourceItemId: 'V02', correct: true },
+  ];
+  const targets = reviewTargets(bank.items, records);
+  assert.equal(targets[0].id, 'V03');
+  assert.equal(targets[0].pending, true);
+  assert.equal(targets[1].id, 'V02');
+  assert.equal(targets[1].pending, false);
+});

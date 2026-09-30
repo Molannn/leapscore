@@ -97,3 +97,10 @@ select,input[type=date]{font:inherit;color:var(--ink);background:var(--paper);bo
 .btn:disabled{opacity:.5;cursor:not-allowed}
 #reviewStatus{color:var(--muted);min-height:1.65em}
 #review .sheet{margin-top:16px}
+
+.interest-start{display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.interest-start label{font-size:14px}
+.interest-start p{margin:0}
+
+.bonus-image{display:block;width:100%;height:auto;border-radius:8px;margin-bottom:20px}
+#bonus .opt{font-family:var(--sans)}
