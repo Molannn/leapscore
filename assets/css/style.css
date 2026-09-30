@@ -76,3 +76,24 @@ select,input[type=date]{font:inherit;color:var(--ink);background:var(--paper);bo
 .hidden{display:none}
 @media (max-width:560px){.score{grid-template-columns:1fr}.big{font-size:64px}.stats{grid-template-columns:1fr 1fr}h1{font-size:25px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.analysis-skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.analysis-skills h3,.wrong-card h3{margin:0 0 10px;font-size:18px}
+.analysis-skills p{margin:5px 0;font-size:14px}
+.muted{color:var(--muted);font-size:13px}
+.review-filters{display:flex;gap:16px;flex-wrap:wrap}
+.review-filters label{display:grid;gap:6px;font-size:14px}
+.wrong-items{display:grid;gap:14px}
+.review-label{color:var(--muted);font-size:13px;margin-top:0}
+.wrong-answer{color:var(--red)}
+.correct-answer{color:var(--ok);font-weight:500}
+.wrong-card summary{cursor:pointer;padding:8px 0;font-weight:500}
+.wrong-card h3,.wrong-card p{overflow-wrap:anywhere}
+@media(max-width:560px){.analysis-skills{grid-template-columns:1fr}nav{flex-wrap:wrap}.review-filters label{flex:1;min-width:120px}}
+.interest-options{border:0;margin:0;padding:0;display:flex;gap:10px;flex-wrap:wrap}
+.interest-options legend{font-size:14px;margin-bottom:10px}
+.interest-choice{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer}
+.interest-choice:has(input:checked){background:var(--hl-soft);border-color:var(--hl)}
+.interest-choice input{accent-color:var(--ink);width:18px;height:18px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+#reviewStatus{color:var(--muted);min-height:1.65em}
+#review .sheet{margin-top:16px}

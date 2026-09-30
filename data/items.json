@@ -17,7 +17,51 @@
         "sunglasses"
       ],
       "answer": 2,
-      "explanation": "天氣冷要穿 jacket(外套),其他選項適合熱天。"
+      "explanation": "天氣冷要穿 jacket(外套),其他選項適合熱天。",
+      "targetWord": "jacket",
+      "reviewHint": "留意天氣與衣物用途：句子需要能保暖的上半身衣物。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "It is cold at the soccer field. Put on your ____ to keep your body warm.",
+            "explanation": "球場很冷，需要穿 jacket（外套）保暖。"
+          },
+          "challenge": {
+            "question": "After the winter race, Mia put a ____ over her shirt before walking home.",
+            "explanation": "冬季賽跑後，在襯衫外再套上 jacket（外套）。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "The game room is very cold. I wear a ____ over my T-shirt to stay warm.",
+            "explanation": "遊戲室很冷，在 T 恤外穿 jacket（外套）保暖。"
+          },
+          "challenge": {
+            "question": "Before leaving the game center on a snowy night, Leo zipped up his ____.",
+            "explanation": "下雪的夜晚離開遊戲中心前，拉上 jacket（外套）的拉鍊。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "The outdoor concert is cold tonight. Bring a ____ to keep your body warm.",
+            "explanation": "戶外演唱會很冷，帶 jacket（外套）保暖。"
+          },
+          "challenge": {
+            "question": "The singer took off her ____ and hung it up; she was still wearing a shirt underneath.",
+            "explanation": "歌手脫下後仍穿著襯衫，外面那件是 jacket（外套）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "It is cold outside. Wear a warm ____ over your shirt when you walk the dog.",
+            "explanation": "冷天遛狗，在襯衫外加穿 jacket（外套）。"
+          },
+          "challenge": {
+            "question": "Before taking his dog into the snow, Ben pulled on a ____ and zipped it up.",
+            "explanation": "到雪地遛狗前，穿上並拉上拉鍊的衣物是 jacket（外套）。"
+          }
+        }
+      }
     },
     {
       "id": "V02",
@@ -31,7 +75,51 @@
         "shy"
       ],
       "answer": 1,
-      "explanation": "幫老人提重物表示 kind(善良的)。"
+      "explanation": "幫老人提重物表示 kind(善良的)。",
+      "targetWord": "kind",
+      "reviewHint": "觀察人物是否主動幫助別人，判斷形容個性的字。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "Our coach is ____. She always helps new players when they need support.",
+            "explanation": "主動幫助新球員，表示教練 kind（善良的）。"
+          },
+          "challenge": {
+            "question": "Although they were on different teams, the ____ player stopped to help an injured opponent.",
+            "explanation": "即使是對手也停下來幫忙，表示球員 kind（善良的）。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "Amy is a ____ player. She always helps beginners learn the game.",
+            "explanation": "主動幫助新手，表示 Amy kind（善良的）。"
+          },
+          "challenge": {
+            "question": "Instead of laughing at the new player, the ____ team leader patiently explained the rules again.",
+            "explanation": "沒有嘲笑新手，反而耐心說明，表示隊長 kind（善良的）。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "Our music teacher is ____. He helps me practice even after class.",
+            "explanation": "課後仍願意幫助學生，表示老師 kind（善良的）。"
+          },
+          "challenge": {
+            "question": "The ____ singer gave her own seat to an old woman while waiting for the show.",
+            "explanation": "把自己的座位讓給老人，表示歌手 kind（善良的）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "Sara is ____ to animals. She gives food and water to hungry street cats.",
+            "explanation": "照顧飢餓的街貓，表示 Sara kind（善良的）。"
+          },
+          "challenge": {
+            "question": "The ____ boy spent his afternoon finding a safe home for a lost puppy.",
+            "explanation": "花時間幫迷路的小狗找安全的家，表示男孩 kind（善良的）。"
+          }
+        }
+      }
     },
     {
       "id": "V03",
@@ -45,7 +133,51 @@
         "quiet"
       ],
       "answer": 3,
-      "explanation": "圖書館裡有人在看書,要保持 quiet(安靜的)。"
+      "explanation": "圖書館裡有人在看書,要保持 quiet(安靜的)。",
+      "targetWord": "quiet",
+      "reviewHint": "留意不能出聲或需要保持低音量的情境。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "Please be ____ while the coach is speaking. Do not make any noise.",
+            "explanation": "教練說話時不能吵鬧，要 quiet（安靜的）。"
+          },
+          "challenge": {
+            "question": "The fans became so ____ before the final shot that we could hear the player breathing.",
+            "explanation": "連呼吸聲都聽得到，表示球迷非常 quiet（安靜的）。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "Please be ____ when you play. The baby is sleeping, so do not make noise.",
+            "explanation": "嬰兒睡覺時玩遊戲要 quiet（安靜的）。"
+          },
+          "challenge": {
+            "question": "With their microphones off, the players stayed ____ so nobody in the next room could hear them.",
+            "explanation": "關掉麥克風、不讓隔壁聽到聲音，表示保持 quiet（安靜的）。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "Please be ____ and stop talking. The piano concert is starting.",
+            "explanation": "鋼琴演奏開始時不要說話，要 quiet（安靜的）。"
+          },
+          "challenge": {
+            "question": "Between the songs, the hall was so ____ that we could hear a clock ticking.",
+            "explanation": "能聽到時鐘滴答聲，表示音樂廳 quiet（安靜的）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "Be ____ near the sleeping puppy. Do not make any noise.",
+            "explanation": "小狗睡覺時不要吵鬧，要 quiet（安靜的）。"
+          },
+          "challenge": {
+            "question": "We stayed ____ behind the tree, and the wild birds did not hear us coming.",
+            "explanation": "野鳥沒聽到我們的聲音，表示我們保持 quiet（安靜的）。"
+          }
+        }
+      }
     },
     {
       "id": "V04",
@@ -59,7 +191,51 @@
         "made"
       ],
       "answer": 0,
-      "explanation": "因為無法開門,可推知鑰匙 lost(弄丟了)。"
+      "explanation": "因為無法開門,可推知鑰匙 lost(弄丟了)。",
+      "targetWord": "lost",
+      "reviewHint": "注意過去發生的事，以及「找不到東西」這個結果。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "Tom ____ his basketball. He cannot find it anywhere.",
+            "explanation": "到處找不到籃球，表示 Tom lost（弄丟了）籃球。"
+          },
+          "challenge": {
+            "question": "After checking every bag at the gym, Ava realized she had ____ her keys.",
+            "explanation": "檢查所有袋子仍找不到，表示她 lost（弄丟了）鑰匙。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "I ____ my game card yesterday. I looked everywhere but could not find it.",
+            "explanation": "到處找都找不到遊戲卡，表示 lost（弄丟了）。"
+          },
+          "challenge": {
+            "question": "Leo could not enter the game event because he had ____ his ticket on the bus.",
+            "explanation": "票落在公車上而無法入場，表示 lost（弄丟了）票。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "Mia ____ her concert ticket. She cannot find it in her bag or room.",
+            "explanation": "包包和房間都找不到票，表示 Mia lost（弄丟了）票。"
+          },
+          "challenge": {
+            "question": "The musician searched the entire station after realizing he had ____ his music book on the train.",
+            "explanation": "發現樂譜本遺落火車後到處尋找，表示 lost（弄丟了）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "Ben ____ his dog's leash. He cannot find it anywhere in the house.",
+            "explanation": "屋裡到處找不到狗牽繩，表示 Ben lost（弄丟了）牽繩。"
+          },
+          "challenge": {
+            "question": "After the walk, Amy searched the park for the dog toy she had ____.",
+            "explanation": "散步後回公園找玩具，表示先前 lost（弄丟了）玩具。"
+          }
+        }
+      }
     },
     {
       "id": "V05",
@@ -73,7 +249,51 @@
         "dangerous"
       ],
       "answer": 1,
-      "explanation": "幾乎人人滿分,表示考試 easy(簡單的)。so...that 表因果。"
+      "explanation": "幾乎人人滿分,表示考試 easy(簡單的)。so...that 表因果。",
+      "targetWord": "easy",
+      "reviewHint": "從完成任務是否輕鬆、是否需要幫助，推論難易程度。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "The exercise was so ____ that every beginner finished it without help.",
+            "explanation": "每個新手都能獨立完成，表示運動 easy（簡單的）。"
+          },
+          "challenge": {
+            "question": "Unlike last week's training, today's exercise was ____ enough for even the youngest player to finish in a minute.",
+            "explanation": "連最年幼的球員都能一分鐘完成，表示 easy（簡單的）。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "This game level is ____. Everyone wins on the first try without help.",
+            "explanation": "每人第一次就能過關且不用幫忙，表示關卡 easy（簡單的）。"
+          },
+          "challenge": {
+            "question": "Despite being new to the game, Jo solved the puzzle immediately because it was so ____.",
+            "explanation": "剛接觸遊戲就立即解開，表示謎題 easy（簡單的）。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "This song is ____ to play. All the beginners can play it without help.",
+            "explanation": "每個初學者都能獨立演奏，表示曲子 easy（簡單的）。"
+          },
+          "challenge": {
+            "question": "With only three notes to learn, the tune was ____ enough for a first piano lesson.",
+            "explanation": "只有三個音符，適合第一堂鋼琴課，表示曲子 easy（簡單的）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "The animal quiz was so ____ that everyone got all the answers right.",
+            "explanation": "大家全部答對，表示動物測驗 easy（簡單的）。"
+          },
+          "challenge": {
+            "question": "Even children who knew little about animals found the first zoo question ____ and answered it immediately.",
+            "explanation": "不熟悉動物的小孩也能立刻回答，表示題目 easy（簡單的）。"
+          }
+        }
+      }
     },
     {
       "id": "V06",
@@ -87,7 +307,51 @@
         "share"
       ],
       "answer": 2,
-      "explanation": "雨量少所以要 save water(節約用水)。waste 意思相反。"
+      "explanation": "雨量少所以要 save water(節約用水)。waste 意思相反。",
+      "targetWord": "save",
+      "reviewHint": "留意資源有限時，要減少消耗、避免浪費的意思。",
+      "reviewContexts": {
+        "sports": {
+          "standard": {
+            "question": "We need to ____ water at the sports center. Turn off taps that are not in use.",
+            "explanation": "關掉不用的水龍頭，是為了 save water（節約用水）。"
+          },
+          "challenge": {
+            "question": "Because of the dry weather, the team takes shorter showers to ____ water after practice.",
+            "explanation": "乾旱時縮短淋浴時間，是為了 save water（節約用水）。"
+          }
+        },
+        "games": {
+          "standard": {
+            "question": "Turn off the game console when you finish playing to ____ electricity.",
+            "explanation": "不玩時關掉遊戲機，是為了 save electricity（節省電力）。"
+          },
+          "challenge": {
+            "question": "To ____ electricity, the game center shuts down every unused screen instead of leaving it on all night.",
+            "explanation": "關掉閒置螢幕而不整夜開著，是為了 save electricity（節省電力）。"
+          }
+        },
+        "music": {
+          "standard": {
+            "question": "Turn off the stage lights after the concert to ____ electricity.",
+            "explanation": "演唱會後關燈，是為了 save electricity（節省電力）。"
+          },
+          "challenge": {
+            "question": "The band uses natural light during daytime practice to ____ electricity.",
+            "explanation": "白天練團利用自然光，是為了 save electricity（節省電力）。"
+          }
+        },
+        "animals": {
+          "standard": {
+            "question": "We should ____ water when washing the dog. Turn off the tap while using soap.",
+            "explanation": "幫狗抹肥皂時關掉水龍頭，是為了 save water（節約用水）。"
+          },
+          "challenge": {
+            "question": "The animal shelter collects rainwater to clean its floors and ____ clean tap water.",
+            "explanation": "收集雨水洗地板，能 save（節省）乾淨的自來水。"
+          }
+        }
+      }
     },
     {
       "id": "G01",

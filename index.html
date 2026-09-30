@@ -16,6 +16,7 @@
   <div class="brand">躍級<small>國中會考英語自適應學習</small></div>
   <nav aria-label="主選單">
     <button data-go="practice" disabled>練習</button>
+    <button data-go="analysis" disabled>學習分析</button>
     <button data-go="report" disabled>診斷報告</button>
     <button data-go="parent" disabled>家長端</button>
   </nav>
@@ -69,6 +70,50 @@
   <div class="row"><button class="btn" data-go="practice">開始今日練習</button></div>
 </section>
 
+<section id="analysis" class="hidden">
+  <h1>我的學習分析</h1>
+  <p class="lead">從累積答題紀錄掌握進步與待加強的地方。包含程度檢測與練習，資料保存在此瀏覽器。</p>
+  <div class="stats" id="learningStats"></div>
+  <h2>近期學習狀況</h2>
+  <div class="sheet" id="learningInsight"></div>
+  <h2>各技能答題表現</h2>
+  <div id="skillAnalysis" class="analysis-skills"></div>
+  <h2>我的興趣與單字複習</h2>
+  <div class="sheet">
+    <p>選擇喜歡的主題，讓 Gemini 為答錯的單字設計新情境。可複選，隨時調整。</p>
+    <fieldset class="interest-options" id="interestOptions"><legend>我感興趣的主題</legend></fieldset>
+    <p id="interestStatus" class="muted" role="status"></p>
+    <p id="reviewSummary" class="muted"></p>
+    <p class="muted">答錯後提供更多線索；同一單字連續答對 2 次後挑戰較間接的情境。複習成果另行記錄，不直接改變預估會考等級。</p>
+  </div>
+  <h2>錯題紀錄</h2>
+  <p class="lead">保留曾經答錯的題目與最近一次錯答。後續原題或情境複習答對會標示「最近已答對」，仍可回顧。單字錯題可點選「依興趣生成複習題」。</p>
+  <div class="review-filters">
+    <label>技能 <select id="wrongSkill"><option value="all">全部技能</option></select></label>
+    <label>狀態 <select id="wrongStatus"><option value="all">全部錯題</option><option value="pending">待加強</option><option value="corrected">最近已答對</option></select></label>
+  </div>
+  <p id="wrongCount" role="status"></p>
+  <div id="wrongItems" class="wrong-items"></div>
+  <div class="row"><button class="btn" data-go="practice">繼續練習</button></div>
+</section>
+
+<section id="review" class="hidden">
+  <h1>興趣單字複習</h1>
+  <p class="lead" id="reviewContext"></p>
+  <p id="reviewStatus" role="status" aria-live="polite"></p>
+  <div id="reviewQuestion" class="sheet hidden">
+    <p id="reviewHint" class="why hidden"></p>
+    <p id="reviewText" class="q"></p>
+    <div id="reviewOptions" class="opts"></div>
+    <div id="reviewFeedback" class="fb hidden" aria-live="polite"></div>
+  </div>
+  <div class="row">
+    <button class="btn" id="generateReview">依興趣生成複習題</button>
+    <button class="btn ghost hidden" id="fallbackReview">改用內建情境題</button>
+    <button class="btn ghost" data-go="analysis">返回學習分析</button>
+  </div>
+</section>
+
 <section id="parent" class="hidden">
   <h1>家長端週報</h1>
   <p class="lead" id="parentLead"></p>
@@ -79,6 +124,7 @@
   <div class="sheet" id="focus" style="font-size:15px"></div>
 </section>
 
+<p id="storageWarning" class="why hidden" role="alert">無法儲存學習紀錄，重新整理後可能遺失本次進度。請確認瀏覽器儲存空間或隱私設定。</p>
 <p class="note">Prototype 展示用。題目為自編範例(見 data/items.json),等級換算與掌握度模型為簡化版(Elo 式 IRT 能力估計與技能層級更新),正式版將以會考歷屆試題校準參數。題目難度對應國中基本 2000 字與國中文法範圍。</p>
 </div>
 
